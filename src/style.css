@@ -1,0 +1,12 @@
+h1,
+p {
+  font-family: Lato;
+}
+.app {
+  width: 30%;
+  min-width: 360px;
+}
+.custom-btn {
+  width: 95%;
+  min-width: 340px;
+}

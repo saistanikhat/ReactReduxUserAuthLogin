@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": ["commonjs", "ESNext"],
+    "strict": true,
+    "baseUrl": "./src",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "paths": {
+      "*": ["src/*"]
+    },
+    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/reportWebVitals.js"],
+  "exclude": ["node_modules"]
+}

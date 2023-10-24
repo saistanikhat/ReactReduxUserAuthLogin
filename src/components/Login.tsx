@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { RootState } from '../store/configureStore';
 import { login } from '../actions/authActions';
 import Constants from '../constants';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import './Login.css';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch<any>();
@@ -13,6 +15,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isButtonEnabled = isEmailValid && password.length > 0 && isAgreeChecked;
@@ -41,6 +44,10 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsAgreeChecked(e.target.checked);
   };
@@ -53,7 +60,7 @@ const Login: React.FC = () => {
       if (!isAgreeChecked) {
         toast.error('Please agree to terms and conditions.', {
           position: 'top-right',
-          autoClose: 5000, // Optional: Auto-close the toast after 5 seconds
+          autoClose: 5000,
         });
       }
     }
@@ -72,26 +79,36 @@ const Login: React.FC = () => {
           <label htmlFor="inputEmail">{Constants.EMAIL}</label>
           <input
             type="email"
-            className="form-control form-control-lg w-25"
+            className="form-control form-control-lg w-30"
             id="inputEmail"
             aria-describedby="emailHelp"
             value={email}
             onChange={handleEmailChange}
+            size={50}
+            maxLength={30}
           />
           {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
         </div>
         <div className="form-group mb-4">
           <label htmlFor="inputPassword">{Constants.PASSWORD}</label>
-          <input
-            type="password"
-            id="inputPassword"
-            className="form-control form-control-lg w-25"
-            value={password}
-            onChange={handlePasswordChange}
-          />
+          <div className="password-input">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="inputPassword"
+              className="form-control form-control-lg w-25"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <span
+              className="password-toggle"
+              onClick={handleTogglePasswordVisibility}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
           {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
         </div>
-        <div className="form-check checkbox-lg w-25 mb-4">
+        <div className="form-check checkbox-lg w-30 mb-4">
           <input
             type="checkbox"
             checked={isAgreeChecked}
@@ -108,7 +125,7 @@ const Login: React.FC = () => {
         <button
           type="submit"
           disabled={!isButtonEnabled || loading}
-          className={`btn btn-primary w-25 mb-4 ${buttonClass}`}
+          className={`btn btn-primary custom-btn w-30 mb-4 ${buttonClass}`}
           onClick={handleLogin}
         >
           <span style={buttonLabel}>{Constants.NEXT_BUTTON_LABEL}</span>
